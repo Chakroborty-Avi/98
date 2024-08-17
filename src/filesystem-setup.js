@@ -49,7 +49,7 @@ ZenFS.configure({
 		__fs_errored = true;
 		if (__fs_waiting_callbacks.length) {
 			// TODO: DRY (can probably simplify this logic significantly)
-			alert("The filesystem is not available. It failed to initialize.");
+			alert("The filesystem is not available. It failed to initialize.\n\n" + error + "\n\nPlease refresh the page.");
 		}
 		__fs_waiting_callbacks = [];
 		// TODO: message box; offer to reset the filesystem
