@@ -47,6 +47,9 @@ ZenFS.configure({
 				backend: ZenFS.Fetch,
 				baseUrl: web_server_root_for_zenfs,
 				index: web_server_root_for_zenfs + "filesystem-index.json",
+				// This prevents it from pre-caching every file in the filesystem.
+				// This means we can't use synchronous filesystem operations, but that's fine.
+				disableAsyncCache: true,
 			},
 		},
 	},
