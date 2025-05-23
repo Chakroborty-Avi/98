@@ -779,7 +779,9 @@ function FolderView(folder_path, { asDesktop = false, onStatus, openFolder, open
 		// as this function is currently used
 		var fs = ZenFS.fs;
 		return new Promise(function (resolve, reject) {
+			console.log("stat", file_path);
 			fs.stat(file_path, function (err, stats) {
+				console.log("stat", file_path, "done", err, stats);
 				if (err) {
 					return reject(err);
 				}
@@ -881,17 +883,20 @@ function FolderView(folder_path, { asDesktop = false, onStatus, openFolder, open
 		});
 	};
 	var drop_file = function (file, x, y) {
-
+		console.log("drop_file", file, x, y);
 		var fs = ZenFS.fs;
 
 		var file_path = folder_path + file.name;
+		console.log("file_path", file_path);
 
 		var reader = new FileReader;
 		reader.onerror = function (error) {
 			throw error;
 		};
 		reader.onload = function (e) {
+			console.log("reader.result", reader.result);
 			fs.writeFile(file_path, reader.result, { flag: "wx" }, function (error) {
+				console.log("writeFile", error);
 				if (error) {
 					if (error.code === "EEXIST") {
 						// TODO: options to replace or keep both files with numbers like "file (1).txt"

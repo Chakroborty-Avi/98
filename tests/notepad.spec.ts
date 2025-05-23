@@ -23,6 +23,7 @@ test('can open CREDITS.txt from desktop', async ({ page }) => {
 	// const actualText = await page.evaluate(() => getSelection()?.toString());
 	// const actualText = await page.locator(':focus').textContent();
 	// const actualText = await page.frameLocator('iframe').locator(':focus').textContent();
+	await page.waitForTimeout(2000);
 	const actualText = await page.frameLocator('iframe').locator(':focus').evaluate((el: HTMLTextAreaElement) => el.value);
 	// expect(actualText).toBe(expectedText);
 	// Have to ignore the line endings

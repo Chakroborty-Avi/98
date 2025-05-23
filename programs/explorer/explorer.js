@@ -558,11 +558,11 @@ ${doc.documentElement.outerHTML}`;
 
 			// Fetch all styles and ensure the results are in document order.
 			// Resolve with a single string of CSS text.
-			return Promise.all(styleElements.map((el) => {
+			return Promise.all(styleElements.map(async (el) => {
 				if (el.href) {
-					return fetch(el.href).then((response) => response.text());
+					return `\n/* from ${el.outerHTML} */\n${await fetch(el.href).then((response) => response.text())}`;
 				} else {
-					return el.innerText;
+					return `\n/* from <style> tag */\n${el.innerText}`;
 				}
 			})).then((stylesArray) => stylesArray.join('\n'));
 		};
@@ -580,11 +580,12 @@ ${doc.documentElement.outerHTML}`;
 			existingStyles.forEach((el) => el.parentElement.removeChild(el));
 		};
 		getPageStyles().then((css) => {
+			console.log("concatenated css before transformations", css);
 			css = css.replace(/padding:\s*((\d+(?:\.?\d+)?\w+),\s*)/g, (match, value) => value.split(/,\s*/g).join(" "));
 			css = css.replace(/font:\s*(\d+pt);/, "font-size: $1; line-height: 1;");
 			css = css.replace(/font:\s*((\d+pt)(\s*\/\s*\d+pt)?) verdana;/, "font: $1 'verdana', sans-serif;");
 			css = css.replace(/style\.(pixel(Width|Height|Left|Top)|left|top)\b/g, "styleHack.$1");
-
+			console.log("concatenated css after transformations", css);
 			replacePageStyles(css);
 		});
 

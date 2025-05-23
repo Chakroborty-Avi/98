@@ -63,7 +63,7 @@ setTimeout(function () {
 		alert("The filesystem is not working.");
 	}
 	__fs_waiting_callbacks = [];
-}, 5000);
+}, 30000);
 
 function withFilesystem(callback) {
 	if (__fs_initialized) {
