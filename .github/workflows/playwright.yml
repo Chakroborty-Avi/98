@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-- uses: clonedSemicolon/setup-strace@v13
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
@@ -26,10 +25,3 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-
-- name: Upload strace artifacts
-  uses: actions/upload-artifact@v4
-  with:
-    name: strace-logs-${{ github.job }}-${{ matrix.flavor || 'lint' }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ strategy.job-index || 0 }}
-    path: /home/runner/strace_logs/
-
